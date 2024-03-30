@@ -1,0 +1,6 @@
+cffi	1.16.0
+cryptography	42.0.2
+pycparser	2.21
+pygame	2.5.2
+setuptools	60.2.0
+wheel	0.37.1
