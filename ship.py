@@ -10,8 +10,10 @@ class Ship(Sprite):
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
-        self.center = float(self.rect.centerx)
+        self.center_x = float(self.rect.centerx)
         self.rect.bottom = self.screen_rect.bottom
+        self.move_up = False
+        self.move_down = False
         self.move_right = False
         self.move_left = False
 
@@ -20,12 +22,18 @@ class Ship(Sprite):
 
     def update_ship(self):
         if self.move_left and self.rect.left > 0:
-            self.center -= 2.5
+            self.center_x -= 2.5
 
         if self.move_right and self.rect.right < self.screen_rect.right:
-            self.center += 2.5
+            self.center_x += 2.5
 
-        self.rect.centerx = self.center
+        if self.move_up and self.rect.top > 0:
+            self.rect.centery -= 2.5
+
+        if self.move_down and self.rect.bottom < self.screen_rect.bottom:
+            self.rect.centery += 2.5
+
+        self.rect.centerx = self.center_x
 
     def create_ship(self):
-        self.center = self.screen_rect.centerx
+        self.rect.bottom = self.screen_rect.bottom

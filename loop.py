@@ -3,7 +3,7 @@ import sys
 from weapon import Bullet
 from aliens import UFO
 import time
-import window
+from window import math_quiz
 
 
 pygame.mixer.init()
@@ -12,14 +12,15 @@ ufo_boom = pygame.mixer.Sound('dist/data/ufo_dead.mp3')
 ship_boom = pygame.mixer.Sound('dist/data/ship_boom.mp3')
 shoot.set_volume(0.3)
 
-
+amo_bullets = 3
 def terminate():
     pygame.quit()
     sys.exit()
 
 #обработка событий игры
-def events(ship, bullets, screen, amo_bullets):
+def events(ship, bullets, screen):
     menu = 0
+    global amo_bullets
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             terminate()
@@ -28,8 +29,18 @@ def events(ship, bullets, screen, amo_bullets):
                 ship.move_right = True
             elif event.key == pygame.K_a:
                 ship.move_left = True
+            elif event.key == pygame.K_w:
+                ship.move_up = True
+            elif event.key == pygame.K_s:
+                ship.move_down = True
             elif event.key == pygame.K_SPACE:
                 shoot.play()
+                amo_bullets -= 1
+                print(amo_bullets)
+                if amo_bullets <= 0:
+                    math_quiz(amo_bullets)
+
+                    amo_bullets = 3
                 new_bullet = Bullet(screen, ship)
                 bullets.add(new_bullet)
             if event.key == pygame.K_ESCAPE:
@@ -41,6 +52,10 @@ def events(ship, bullets, screen, amo_bullets):
                 ship.move_right = False
             elif event.key == pygame.K_a:
                 ship.move_left = False
+            elif event.key == pygame.K_w:
+                ship.move_up = False
+            elif event.key == pygame.K_s:
+                ship.move_down = False
 
 
 #обновление экрана
